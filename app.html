@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>低价车票 · 出行日历</title><link rel="stylesheet" href="app.css"></head>
+<body>
+<header><div class="brand"><span class="mark">↔</span><div><strong>慢一点，省一点。</strong><small>AUSTRALIA · FARE CALENDAR</small></div></div><span class="local">本地缓存 · 无需登录</span></header>
+<main>
+  <section class="intro"><div><span class="eyebrow">BUS & RAIL FARE FINDER</span><h1>好价格，换个日子就能遇见。</h1><p>选好城市，在日历里安排下一程。1 位普通成人 · 澳元</p></div><div class="route"><b id="route-origin">MEL</b><span id="route-arrow">→</span><b id="route-destination">SYD</b></div></section>
+  <div class="layout">
+    <aside>
+      <form id="search-form">
+        <fieldset id="query-fields"><legend>01 / 路线与日期</legend>
+          <label>出发地<select id="origin"></select></label>
+          <label>目的地<select id="destination"></select></label>
+          <button id="swap" class="swap" type="button">⇄ 交换出发地和目的地</button>
+          <label>行程<select id="tripType"><option value="oneway">单程</option><option value="roundtrip">往返</option></select></label>
+          <label>出发日期，从<input id="start" type="date" required></label>
+          <label>到（含当天）<input id="end" type="date" required></label>
+          <div class="quick"><button type="button" data-days="7">7 天</button><button type="button" data-days="30">30 天</button><button type="button" data-days="90">90 天</button></div>
+          <label>运营商<select id="provider"><option value="both">FlixBus + NSW TrainLink</option><option value="flixbus">FlixBus 巴士</option><option value="train">NSW TrainLink 火车 / 巴士</option></select></label>
+          <label class="check"><input type="checkbox" id="refresh"> 重新查询，更新本次范围内的价格</label>
+          <p class="field-note">默认复用已查日期。往返的两个方向共用日期范围，请覆盖返程日期。</p>
+        </fieldset>
+        <button class="primary" type="submit" id="search">查询低价票 <span>↗</span></button>
+        <div class="run-actions"><button type="button" id="resume" hidden>继续上次查询</button><button type="button" id="stop" hidden>暂停查询</button><button type="button" id="retry" hidden>重试失败日期</button></div>
+      </form>
+      <fieldset class="filters"><legend>02 / 筛选结果</legend>
+        <label>价格上限（每程 / AUD）<input id="max" type="number" min="0" step="0.01" placeholder="不限"></label>
+        <label class="check"><input type="checkbox" id="direct"> 只看直达</label>
+        <label class="check"><input type="checkbox" id="central"> 排除机场站</label>
+      </fieldset>
+      <p class="aside-note">查询时请保留本页，可切换标签页。关闭或刷新后可继续。日期缓存保留在本机，换路线也不会覆盖。</p>
+      <details class="help"><summary>查询与缓存说明</summary><p>绿色价格为当前方向的最低价。已查无票、筛选无匹配、待查询和失败会分别标注。查询时间显示在日期提示和班次列表中。</p><p>旧价格不会自动更新。需要最新报价时，勾选“重新查询”，或点击班次的官网链接核价。</p><p>FlixBus 金额含接口返回的平台费。NSW TrainLink 包含替代巴士或换乘行程；查询时会打开临时官网标签页，结束后关闭。</p><button type="button" id="clear">清除全部本地结果与缓存</button></details>
+    </aside>
+    <section class="results" aria-label="查询结果">
+      <div class="summary-grid"><article><small id="lowest-label">当前方向最低 / AUD</small><strong id="lowest">—</strong><span id="lowest-note">等待查询</span></article><article><small>当前方向匹配报价</small><strong id="count">0</strong><span id="count-note">按价格从低到高</span></article><article><small>查询进度</small><strong id="progress-count">0 / 0</strong><span id="progress-note">尚未开始</span></article></div>
+      <div class="status"><div><span id="status-dot"></span><span id="status" role="status" aria-live="polite">选好路线和日期，开始寻找下一程。</span></div><progress id="progress" value="0" max="1"></progress></div>
+      <div id="notice" class="notice" role="alert" hidden></div>
+      <div class="table-heading"><div><h2>票价日历</h2><p id="scope">结果将在这里显示</p></div><button id="export" type="button" disabled>导出 CSV ↓</button></div>
+      <div id="empty" class="empty"><span>↔</span><h3>下一程，还没定？</h3><p>查询后，点击日期展开按价格升序排列的班次。<br>往返先选去程，再选返程。</p></div>
+      <section id="calendar" class="calendar" hidden aria-label="票价日历">
+        <div class="calendar-toolbar"><button id="prev-month" type="button" aria-label="上个月">‹</button><h3 id="month-label"></h3><button id="next-month" type="button" aria-label="下个月">›</button></div>
+        <div class="selection-toolbar"><div><strong id="leg-label"></strong><p id="selection-hint" role="status" aria-live="polite"></p></div><button id="reset-selection" type="button" hidden>重选日期</button></div>
+        <div class="weekdays" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+        <div id="calendar-grid" class="calendar-grid"></div>
+        <p class="calendar-legend">价格为当前筛选下的每程最低价 · “缓存”沿用此前报价 · 点击日期查看班次</p>
+      </section>
+      <details id="errors" class="errors" hidden><summary id="errors-label"></summary><ul id="error-list"></ul></details>
+      <footer>票价为查询时的快照，可能变动或售罄，预订前请到官网核价。往返展示两次独立单程报价；同日返程请核对去程到达与返程出发时间。</footer>
+    </section>
+  </div>
+</main><script type="module" src="app.js"></script>
+</body></html>

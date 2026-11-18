@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "澳洲低价车票 · 出行日历",
+  "version": "2.0.0",
+  "description": "多城市 FlixBus / NSW TrainLink 票价日历，支持单程、往返及按日期缓存。",
+  "minimum_chrome_version": "109",
+  "permissions": [
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://global.api.flixbus.com/*",
+    "https://transportnsw.info/*"
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "打开低价车票日历",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "background": {
+    "service_worker": "worker.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'; connect-src https://global.api.flixbus.com https://transportnsw.info"
+  }
+}
