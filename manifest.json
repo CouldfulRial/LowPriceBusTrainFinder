@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "澳洲低价车票 · 出行日历",
-  "version": "2.0.0",
+  "name": "铁锭即刻出发",
+  "version": "2.0.1",
   "description": "多城市 FlixBus / NSW TrainLink 票价日历，支持单程、往返及按日期缓存。",
   "minimum_chrome_version": "109",
   "permissions": [
@@ -19,7 +19,7 @@
     "128": "icons/icon128.png"
   },
   "action": {
-    "default_title": "打开低价车票日历",
+    "default_title": "打开铁锭即刻出发",
     "default_icon": {
       "16": "icons/icon16.png",
       "32": "icons/icon32.png"

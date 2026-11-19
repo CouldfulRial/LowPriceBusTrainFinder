@@ -1,5 +1,5 @@
-澳洲低价车票 · 出行日历 — Chrome / Edge 扩展
-版本 2.0.0
+铁锭即刻出发 — Chrome / Edge 扩展
+版本 2.0.1
 
 安装：打开 chrome://extensions 或 edge://extensions，开启开发者模式，加载包含 manifest.json 的文件夹。
 更新：保留原安装目录，更新文件后在扩展管理页点“重新加载”，再刷新查询页。

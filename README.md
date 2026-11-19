@@ -1,4 +1,4 @@
-# 澳洲低价车票 · 出行日历
+# 铁锭即刻出发
 
 Chrome / Edge Manifest V3 扩展。按日期比较 FlixBus 和 NSW TrainLink 普通成人票价，支持多城市、单程 / 往返、持久缓存和日历选程。金额均为澳元。
 
